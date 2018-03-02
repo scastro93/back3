@@ -1,0 +1,23 @@
+{
+    "development": {
+        "username": "scastro81",
+        "password": null,
+        "database": "database_development_shop",
+        "host": "db",
+        "dialect": "postgres"
+    },
+    "test": {
+        "username": "scastro81",
+        "password": null,
+        "database": "database_test_shop",
+        "host": "127.0.0.1",
+        "dialect": "postgres"
+    },
+    "production": {
+        "username": "scastro81",
+        "password": null,
+        "database": "database_production_shop",
+        "host": "127.0.0.1",
+        "dialect": "postgres"
+    }
+}

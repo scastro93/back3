@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package cart;
+
+service Cart {
+  rpc checkout (cartId) returns (check);
+  rpc addProductsToCart (requestProductCart) returns (responseProductCart);
+  rpc deleteProductInCart (requestDelete) returns (productList);
+  rpc checkCart (cartId) returns (productList);
+}
+
+message cartId {
+  int32 id = 1;
+}
+
+message check {
+  double totalPrice = 1;
+}
+
+message requestProductCart {
+  cartId cid = 1;
+  product product = 2;
+}
+
+message product {
+  int32 id = 1;
+  string name = 2;
+  string code = 3;
+  double price = 4;
+  int32 qty = 5;
+}
+
+message responseProductCart {
+  int32 id = 1;
+  int32 userId = 2;
+  double totalPrice = 3;
+}
+
+message requestDelete {
+	cartId cid = 1;
+	int32 pid = 2;
+}
+
+message productList {
+	cartId cid = 1;
+	repeated product products = 2;
+}
