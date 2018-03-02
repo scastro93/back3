@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package user;
+
+service User {
+  rpc addUser (requestUser) returns (boolRes);
+  rpc getUser (userId) returns (boolRes);
+}
+
+message requestUser {
+  string email =  1;
+  string password = 2;
+}
+
+message userId {
+  int32 id = 1;
+}
+
+message boolRes {
+  bool res = 1;
+}
