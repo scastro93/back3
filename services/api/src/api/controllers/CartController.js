@@ -11,6 +11,7 @@ module.exports = {
             return res;
         } catch (e) {
             console.log(err);
+            return err;
         }
     },
     async addProductsToCart(root, args, context) {
@@ -23,8 +24,16 @@ module.exports = {
 
         try {
             await gateway.sendUser('cart', 'addProductsToCart', request);
-        } catch (e) {}
+            return true;
+        } catch (e) {
+            console.log(err);
+            return err;
+        }
     },
-    async deleteProductInCart(root, args, context) {},
-    async checkCart(root, args, context) {},
+    async deleteProductInCart(root, args, context) {
+        return true;
+    },
+    async checkCart(root, args, context) {
+        return true;
+    },
 };

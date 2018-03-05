@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const basename = path.basename(module.filename);
-const _ = require('lodash');
+// const _ = require('lodash');
 let resolvers = {};
 
 fs
