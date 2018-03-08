@@ -11,5 +11,3 @@ app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: schema }));
 app.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' })); // if you want GraphiQL enabled
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
-
-module.exports = app;

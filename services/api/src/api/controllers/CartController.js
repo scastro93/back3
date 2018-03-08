@@ -1,39 +1,45 @@
 const gateway = require('../helpers/gateway');
 
 module.exports = {
-  async checkout(root, args, context) {
-    const request = {
-      id: context.id,
-    };
-
+  createCart(root, args, context) {
     try {
-      const res = await gateway.sendUser('cart', 'checkout', request);
-      return res;
+      const request = {
+        userId: args.input.userId,
+      };
+      return gateway.sendUser('Cart', 'createCart', request);
     } catch (e) {
-      console.log(err);
-      return err;
+      console.log('err in controller', e);
     }
   },
-  async addProductsToCart(root, args, context) {
-    const request = {
-      name: args.name,
-      code: args.code,
-      price: args.price,
-      qty: args.qty,
-    };
-
+  addProductsToCart(root, agrs, context) {
     try {
-      await gateway.sendUser('cart', 'addProductsToCart', request);
-      return true;
+      const request = {
+        cid: args.input.cid,
+        pid: args.input.pid,
+      };
+      return gateway.sendUser('Cart', 'createCart', request);
     } catch (e) {
-      console.log(err);
-      return err;
+      console.log('err in controller', e);
     }
   },
-  async deleteProductInCart(root, args, context) {
-    return true;
+  checkout(root, args, context) {
+    try {
+      const request = {
+        id: args.input.id,
+      };
+      return gateway.sendUser('cart', 'checkout', request);
+    } catch (e) {
+      console.log('err in controller', e);
+    }
   },
-  async checkCart(root, args, context) {
-    return true;
+  checkCart(root, args, context) {
+    try {
+      const request = {
+        id: args.input.id,
+      };
+      return gateway.sendUser('cart', 'checkCart', request);
+    } catch (e) {
+      console.log('err in controller', e);
+    }
   },
 };

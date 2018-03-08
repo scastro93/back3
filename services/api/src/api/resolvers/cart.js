@@ -1,23 +1,20 @@
-const cartController = require('../controllers/CartController');
+const controller = require('../controllers/CartController');
 
 const resolvers = {
   Mutation: {
-    addProductsToCart: cartController.create,
-    deleteProductInCart: cartController.delete,
-  },
-  Query: {
-    checkCart: (root, args, context, info) => {
-      return cartController.checkCart(root, args, context, info);
+    createCart: (root, args, context) => {
+      return controller.createCart(root, args, context);
+    },
+    addProductsToCart: (root, args, context) => {
+      return controller.addProductsToCart(root, args, context);
+    },
+    checkout: (root, input, context) => {
+      return controller.checkout(root, args, context);
     },
   },
-  Cart: {
-    checkout: (root, args, context, info) => {
-      const args = {
-        input: {
-          id: args.id,
-        },
-      };
-      return cartController.checkout(root, args, context, info);
+  Query: {
+    checkCart: (root, args, context) => {
+      return controller.checkCart(root, args, context);
     },
   },
 };

@@ -7,9 +7,8 @@ const models = require('./models');
 const CartProto = grpc.load('/var/lib/core/protos/user/cart.proto').cart;
 const UserProto = grpc.load('/var/lib/core/protos/user/user.proto').user;
 
-// Protos
-// const CartProto = grpc.load(__dirname + '/api/protos/cart.proto').cart;
-// const UserProto = grpc.load(__dirname + '/api/protos/user.proto').user;
+// const CartProto = grpc.load('./api/protos/cart.proto').cart;
+// const UserProto = grpc.load('./api/protos/user.proto').user;
 
 // GRPC Controllers
 const CartController = require(__dirname + '/api/controllers/cart.js');
@@ -20,9 +19,7 @@ server.addService(UserProto.User.service, UserController);
 server.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());
 
 models.sequelize.sync().then(() => {
-    server.start();
+  server.start();
 });
 
 console.log(`Listening on port ${port}`);
-
-module.exports.app = server;
