@@ -2,46 +2,33 @@ const { Cart } = require('../../models');
 const { Product } = require('../../models');
 
 class CartController {
-  async checkout(call, callback) {
+  async createCart(call, callback) {
     try {
-      let cart = await Cart.findById(call.request.cid);
-
-      if (!cart) {
-        throw new Error('not found');
-      }
-
-      let total = await cart.checkout();
-
-      callback(null, total.toFixed(2));
-    } catch (err) {
-      callback(err);
+      const cart = await Cart.create(call.request);
+      callback(null, cart);
+    } catch (error) {
+      callback(error);
     }
   }
 
   async addProductsToCart(call, callback) {
     try {
       const cart = await Cart.findById(call.request.cid);
+      const product = await Product.findById(call.request.pid);
 
-      if (!cart) {
+      if (!cart || !product) {
         throw new Error('not found');
       }
 
-      const newItem = {
-        name: call.dataValues.name,
-        code: call.dataValues.code,
-        price: call.dataValues.price,
-        qty: call.dataValues.qty,
-      };
-
-      await cart.addItems(newItem);
-      const newCart = await Cart.getItems();
-      callback(null, newCart);
+      await cart.addItem(product); // error here
+      const cartFetched = await cart.getItems();
+      callback(null, cartFetched);
     } catch (err) {
       callback(err);
     }
   }
 
-  async deleteProductInCart(call, callback) {
+  async deleteCart(call, callback) {
     try {
       await Cart.delete(call.request.cid);
       callback(null, true);
@@ -53,8 +40,18 @@ class CartController {
   async checkCart(call, callback) {
     try {
       const cart = await Cart.findById(call.request.cid);
-      const newCart = await Cart.getItems();
-      callback(null, newCart);
+      callback(null, cart);
+    } catch (err) {
+      callback(err);
+    }
+  }
+
+  async checkout(call, callback) {
+    try {
+      let cart = await Cart.findById(call.request.cid);
+      let total = await cart.checkout();
+      cart.totalPrice = total;
+      callback(null, cart);
     } catch (err) {
       callback(err);
     }

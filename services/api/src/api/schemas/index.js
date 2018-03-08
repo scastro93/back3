@@ -1,10 +1,8 @@
 const { makeExecutableSchema } = require('graphql-tools');
-
-const userDefs = require('./user');
-const cartDefs = require('./cart');
-const productDefs = require('./product');
-
 const { resolvers } = require('../resolvers');
+
+const cartDefs = require('./cart');
+const userDefs = require('./user');
 
 const SchemaDefinition = `
 type Query {
@@ -30,8 +28,7 @@ schema {
 }
 `;
 
-const typeDefs = [SchemaDefinition, ...userDefs, ...cartDefs, ...productDefs];
-
+const typeDefs = [SchemaDefinition, ...cartDefs, ...userDefs];
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 module.exports = schema;

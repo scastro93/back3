@@ -16,12 +16,14 @@ module.exports = (sequelize, Sequelize) => {
           model: 'User',
           key: 'id',
         },
+        allowNull: false,
       },
     },
     {}
   );
   Cart.associate = function(models) {
     Cart.belongsToMany(models.Product, { through: 'CartItem', as: 'items' });
+    models.Product.belongsToMany(Cart, { through: 'CartItem' });
     Cart.belongsTo(models.User, { as: 'user' });
   };
 

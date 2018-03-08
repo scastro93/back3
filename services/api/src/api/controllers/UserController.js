@@ -1,17 +1,18 @@
-// const gateway = require('../helpers/gateway');
-//
-// module.exports = {
-//     addUser(req, res) {
-//         const { body } = req;
-//         const data = {
-//             email: body.email,
-//             password: body.password,
-//         };
-//
-//         return gateway
-//             .addUser()
-//             .then()
-//             .catch();
-//     },
-//     getUser() {},
-// };
+const gateway = require('../helpers/gateway');
+
+module.exports = {
+  addUser(root, args, context) {
+    const request = {
+      email: args.email,
+      password: args.password,
+    };
+
+    return gateway.sendUser('user', 'addUser', request);
+  },
+  getUser(root, args, context) {
+    const request = {
+      id: args.id,
+    };
+    return gateway.sendUser('user', 'getUser', request);
+  }
+};

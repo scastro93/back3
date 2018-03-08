@@ -8,7 +8,7 @@ class UserController {
         password: call.dataValues.password,
       };
       await User.create(newUser);
-      callback(null, true);
+      callback(null, newUser);
     } catch (err) {
       callback(err);
     }
@@ -16,9 +16,19 @@ class UserController {
 
   async getUser(call, callback) {
     try {
-      const getUser = await User.findById(call.request.email);
+      const user = await User.findById(call.request.email);
 
-      callback(null, true);
+      callback(null, user);
+    } catch (err) {
+      callback(err);
+    }
+  }
+
+  async getAllUsers(call, callback) {
+    try {
+      const users = await User.find();
+
+      callback(null, users);
     } catch (err) {
       callback(err);
     }
