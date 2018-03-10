@@ -37,7 +37,7 @@ class Gateway {
       client[method](data, { deadline }, (error, result) => {
         if (error) {
           let parsedError;
-
+          console.log("estoy entrando al error", error)
           try {
             parsedError = JSON.parse(error.message);
           } catch (e) {
@@ -49,16 +49,14 @@ class Gateway {
 
           return reject(parsedError);
         }
-
+        console.log("result in request, gateway", result)
         return resolve(result);
       });
     });
   }
 
   getDirectories(srcpath) {
-    return fs
-      .readdirSync(srcpath)
-      .filter((file) => fs.statSync(path.join(srcpath, file)).isDirectory());
+    return fs.readdirSync(srcpath).filter((file) => fs.statSync(path.join(srcpath, file)).isDirectory());
   }
 
   getFiles(srcpath) {
@@ -71,6 +69,7 @@ class Gateway {
   }
 
   sendUser(service, method, data) {
+    console.log("send user, gateway", this.user[service], service, method, data)
     return this.request(this.user[service], method, data);
   }
 }

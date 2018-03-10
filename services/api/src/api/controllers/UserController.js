@@ -3,16 +3,15 @@ const gateway = require('../helpers/gateway');
 module.exports = {
   addUser(root, args, context) {
     const request = {
-      email: args.email,
-      password: args.password,
+      email: args.input.email,
+      password: args.input.password,
     };
-
     return gateway.sendUser('user', 'addUser', request);
   },
   getUser(root, args, context) {
     const request = {
-      id: args.id,
+      id: args.input.id,
     };
     return gateway.sendUser('user', 'getUser', request);
-  }
+  },
 };

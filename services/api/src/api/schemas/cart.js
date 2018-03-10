@@ -7,7 +7,7 @@ const cartDefs = `
     checkout(input: cartId!): Cart
   }
   extend type Query {
-    checkCart(input: cartId!): Cart
+    checkCart(input: cartId): Cart
   }
 `;
 

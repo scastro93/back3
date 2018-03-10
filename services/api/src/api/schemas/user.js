@@ -6,7 +6,7 @@ const userDefs = `
   }
 
   extend type Query {
-    getUser(input: userId!): User
+    getUser(input: userId): User
   }
 `;
 

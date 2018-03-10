@@ -3,13 +3,13 @@ const usersController = require('../controllers/UserController.js');
 const resolvers = {
   Mutation: {
     addUser: () => {
-      usersController.addUser(root, args, context, info);
+      return usersController.addUser(root, args, context);
     },
   },
   Query: {
-    getUser: (root, args, context, info) => {
-      return usersController.getUser(root, args, context, info);
-    }
+    getUser: (root, args, context) => {
+      return usersController.getUser(root, args, context);
+    },
   },
 };
 
