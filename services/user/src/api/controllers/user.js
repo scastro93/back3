@@ -16,19 +16,8 @@ class UserController {
 
   async getUser(call, callback) {
     try {
-      const user = await User.findById(call.request.email);
-
+      const user = await User.findById(call.request.id);
       callback(null, user);
-    } catch (err) {
-      callback(err);
-    }
-  }
-
-  async getAllUsers(call, callback) {
-    try {
-      const users = await User.find();
-
-      callback(null, users);
     } catch (err) {
       callback(err);
     }

@@ -3,13 +3,12 @@
 
 set -e
 
-host="$1"
-shift
 cmd="$@"
 
-until psql -h "$host" -U "postgres" -c '\q'; do
-  >&2 echo "Postgres is unavailable - sleeping"
-  sleep 1
+until nc -z -v -w30 db 5432
+do
+  echo "waiting for db start..."
+  sleep 5
 done
 
 >&2 echo "Postgres is up - executing command"
