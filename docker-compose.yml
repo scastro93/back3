@@ -5,13 +5,15 @@ services:
     image: postgres:10
     ports:
       - '5432:5432'
-    volumes:
-      -  ./postgres-data:/var/lib/postgresql/data
+    # volumes:
+    #   -  ./postgres-data:/var/lib/postgresql/data
     environment:
       DEBUG: 'false'
-      POSTGRES_USER: scastro81
+      POSTGRES_USER: postgres
       POSTGRES_PASS:
-      POSTGRES_NAME: database_development_shop
+      POSTGRES_DB: database_development_shop
+    expose:
+      - "5432"
   api:
     build:
       context: ./services
@@ -20,9 +22,7 @@ services:
     links:
       - user
     ports:
-      - "3000:3000"
-    # volumes:
-    #   - /var/lib/app
+      - 3000:3000
   user:
     build:
       context: ./services
@@ -31,16 +31,14 @@ services:
     links:
       - db
     ports:
-      - '50050:50050'
-    # volumes:
-    #   - /var/lib/app
+      - 50050:50050
     depends_on:
       - db
+    command: ["./wait-for-it.sh", "node", "app.js"]
     environment:
-      POSTGRES_USER: scastro81
-      POSTGRES_PASSWORD:
-      POSTGRES_DB: database_development_shop
-      POSTGRES_HOST: db
-
-volumes:
-  postgres-data:
+      PORT: 80
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_PORT: 5432
+      DB_NAME: user
+      DB_HOST: db
