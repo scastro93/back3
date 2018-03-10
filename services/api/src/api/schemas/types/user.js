@@ -9,7 +9,7 @@ const UserDefs = `
     password: String
   }
   input userId {
-    id: Int
+    id: Int!
   }
 `;
 

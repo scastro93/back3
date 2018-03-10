@@ -3,7 +3,7 @@ const userData = require('/var/lib/core/integration_fixtures/user');
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('User', [
+    return queryInterface.bulkInsert('Users', [
       {
         email: 'admin1@email.com',
         password: 'password',

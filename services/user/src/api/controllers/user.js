@@ -4,8 +4,8 @@ class UserController {
   async addUser(call, callback) {
     try {
       const newUser = {
-        email: call.dataValues.email,
-        password: call.dataValues.password,
+        email: call.email,
+        password: call.password,
       };
       await User.create(newUser);
       callback(null, newUser);
