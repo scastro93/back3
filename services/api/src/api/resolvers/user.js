@@ -2,7 +2,7 @@ const usersController = require('../controllers/UserController.js');
 
 const resolvers = {
   Mutation: {
-    addUser: () => {
+    addUser: (root, args, context) => {
       return usersController.addUser(root, args, context);
     },
   },

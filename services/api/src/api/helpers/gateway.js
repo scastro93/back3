@@ -28,7 +28,6 @@ class Gateway {
   }
 
   request(client, method, data) {
-    /* istanbul ignore next */
     return new Promise((resolve, reject) => {
       const deadline = new Date();
 
@@ -37,7 +36,6 @@ class Gateway {
       client[method](data, { deadline }, (error, result) => {
         if (error) {
           let parsedError;
-          console.log("estoy entrando al error", error)
           try {
             parsedError = JSON.parse(error.message);
           } catch (e) {
@@ -49,7 +47,6 @@ class Gateway {
 
           return reject(parsedError);
         }
-        console.log("result in request, gateway", result)
         return resolve(result);
       });
     });

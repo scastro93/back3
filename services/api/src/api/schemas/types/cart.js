@@ -1,19 +1,19 @@
 const CartDefs = `
-  input createOrderInput {
-    id: Int
-    userId: Int
-  }
   type Cart {
     id: Int,
     totalPrice: Float,
     userId: Int,
   }
+  input createOrderInput {
+    id: Int!
+    userId: Int!
+  }
   input addProductInput {
-    cid: Int,
-    pid: Int,
+    CartId: Int!,
+    ProductId: Int!,
   }
   input cartId {
-    id: Int
+    id: Int!
   }
 `;
 

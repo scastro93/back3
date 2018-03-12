@@ -4,8 +4,8 @@ const { Product } = require('../../models');
 class CartController {
   async createCart(call, callback) {
     try {
-      const cart = await Cart.create(call.request);
-      callback(null, cart);
+      const cart = await Order.create(call.request);
+      callback(null, cart.dataValues.id);
     } catch (error) {
       callback(error);
     }
@@ -15,23 +15,13 @@ class CartController {
     try {
       const cart = await Cart.findById(call.request.cid);
       const product = await Product.findById(call.request.pid);
-
-      if (!cart || !product) {
-        throw new Error('not found');
-      }
-
-      await cart.addItem(product); // error here
-      const cartFetched = await cart.getItems();
-      callback(null, cartFetched);
-    } catch (err) {
-      callback(err);
-    }
-  }
-
-  async deleteCart(call, callback) {
-    try {
-      await Cart.delete(call.request.cid);
-      callback(null, true);
+      await cart.addItem(product);
+      const payload = {
+        id: cart.dataValues.id,
+        totalPrice: cart.dataValues.totalPrice,
+        userId: cart.dataValues.userId
+      };
+      callback(null, payload);
     } catch (err) {
       callback(err);
     }
@@ -39,8 +29,13 @@ class CartController {
 
   async checkCart(call, callback) {
     try {
-      const cart = await Cart.findById(call.request.cid);
-      callback(null, cart);
+      const cart = await Cart.findById(call.request.id);
+      const payload = {
+        id: cart.dataValues.id,
+        totalPrice: cart.dataValues.totalPrice,
+        userId: cart.dataValues.userId
+      }
+      callback(null, payload);
     } catch (err) {
       callback(err);
     }
@@ -48,10 +43,9 @@ class CartController {
 
   async checkout(call, callback) {
     try {
-      let cart = await Cart.findById(call.request.cid);
-      let total = await cart.checkout();
-      cart.totalPrice = total;
-      callback(null, cart);
+      let cart = await Cart.findById(call.request.id);
+      cart = await cart.checkout();
+      callback(null, getOne.total);
     } catch (err) {
       callback(err);
     }
