@@ -2,7 +2,7 @@ const cartTypes = require('./types/cart');
 
 const cartDefs = `
   extend type Mutation {
-    createCart(input: createOrderInput!): Cart
+    createCart(input: createCartInput!): Cart
     addProductsToCart(input: addProductInput!): Cart
     checkout(input: cartId!): Cart
   }

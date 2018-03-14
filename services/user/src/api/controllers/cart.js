@@ -30,8 +30,8 @@ class CartController {
 
   async addProductsToCart(call, callback) {
     try {
-      const cart = await Cart.findById(call.request.cid);
-      const product = await Product.findById(call.request.pid);
+      const cart = await Cart.findById(call.request.CartId);
+      const product = await Product.findById(call.request.ProductId);
 
       if (!cart) {
         throw new Error("no existe el carrito");
@@ -83,7 +83,7 @@ class CartController {
       }
       
       cart = await cart.checkout();
-      callback(null, getOne.total);
+      callback(null, cart.totalPrice);
     } catch (err) {
       callback(err);
     }

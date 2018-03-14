@@ -5,6 +5,9 @@ const resolvers = {
     addUser: (root, args, context) => {
       return usersController.addUser(root, args, context);
     },
+    deleteUser: (root, args, context) => {
+      return usersController.deleteUser(root, args, context);
+    }
   },
   Query: {
     getUser: (root, args, context) => {

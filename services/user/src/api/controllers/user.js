@@ -18,8 +18,9 @@ class UserController {
   async addUser(call, callback) {
     try {
 
-      //validacion correo existente
       const existingMail = await _.find(User, { 'email': call.request.email });      
+      
+      //validacion correo existente
       if(existingMail){
         throw new Error("ya existe el correo");
       }

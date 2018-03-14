@@ -4,6 +4,9 @@ const UserDefs = `
     email: String
     password: String
   }
+  type ListUser {
+    user: [User]
+  }
   input addUserInput {
     email: String
     password: String
