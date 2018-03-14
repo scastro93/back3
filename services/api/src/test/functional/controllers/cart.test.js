@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const API = require('../helpers/api');
 const chai = require('chai');
 const sinon = require('sinon');
 const sandbox = sinon.sandbox.create();
