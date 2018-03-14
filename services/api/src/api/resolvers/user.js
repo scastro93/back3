@@ -1,0 +1,19 @@
+const usersController = require('../controllers/UserController.js');
+
+const resolvers = {
+  Mutation: {
+    addUser: (root, args, context) => {
+      return usersController.addUser(root, args, context);
+    },
+    deleteUser: (root, args, context) => {
+      return usersController.deleteUser(root, args, context);
+    }
+  },
+  Query: {
+    getUser: (root, args, context) => {
+      return usersController.getUser(root, args, context);
+    },
+  },
+};
+
+module.exports = { resolvers };

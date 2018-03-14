@@ -1,0 +1,22 @@
+syntax = "proto3";
+package user;
+
+service User {
+  rpc addUser(RequestAddUser) returns (ResponseUser) {}
+  rpc getUser(UserId) returns (ResponseUser) {}
+}
+
+message RequestAddUser {
+  string email = 1;
+  string password = 2;
+}
+
+message ResponseUser {
+  int32 id = 1;
+  string email = 2;
+  string password = 3;
+}
+
+message UserId {
+  int32 id = 1;
+}
