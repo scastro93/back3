@@ -1,42 +1,26 @@
 const _ = require('lodash');
-const API = require('../helpers/api');
+const API = require('../helpers/api')
 const chai = require('chai');
 const sinon = require('sinon');
-const sandbox = sinon.sandbox.create();
+const expect = chai.expect;
+const assert = chai.assert;
 
-const controller = require('../../../api/controllers/UsersController');
-const gateway = require('../../../api/helpers/gateway');
+const getCartFixtures = require('../fixtures/cart');
 
 chai.should();
 chai.use(require('chai-as-promised'));
 
-describe('unit/Users controller', () => {
+describe('functional/Cart controller', () => {
+
   afterEach(() => {
-    sandbox.restore();
+    API.build = '';
   });
 
-  describe('addUser', () => {
-    it('positive', async () => {})
-  });
-  describe('getUser', () => {
-    const fixtures = require('/var/lib/core/integration_fixtures/user');
-    const user = _.find(fixtures, { email: 'update_password@email.com' });
-    const { email, password } = user;
-
-    it('positive', async () => {
-      await API.buildMutation('createOrder', fixturesOrder.createOrder, ['id']);
-      await API.execute();
-      expect(API.result).to.be.an('object');
-      expect(API.result.data).to.have.property('createOrder');
-      expect(API.result.data.createOrder).to.have.property('id');
-    });
-
-    it('negative, id doesnot exist', async () => {
-      await API.buildMutation('createOrder', fixturesOrder.createOrder, ['id']);
-      await API.execute();
-      expect(API.result).to.be.an('object');
-      expect(API.result.data).to.have.property('createOrder');
-      expect(API.result.data.createOrder).to.have.property('id');
-    });
+  it('positive', async () => {
+    await API.buildMutation('createCart', getUserFixtures.createCart, ['id']);
+    await API.execute();
+    expect(API.result).to.be.an('object');
+    expect(API.result.data).to.have.property('getUser');
+    expect(API.result.data.getUser).to.have.property('email');
   });
 });

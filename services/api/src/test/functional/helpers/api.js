@@ -1,5 +1,5 @@
 const request = require('superagent');
-const seeds = require('./seeds/seed');
+const seeds = require('../seeds/seed');
 
 class CreatePetition {
   constructor(url) {

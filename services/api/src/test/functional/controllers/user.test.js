@@ -1,41 +1,52 @@
 const _ = require('lodash');
+const API = require('../helpers/api')
 const chai = require('chai');
 const sinon = require('sinon');
-const sandbox = sinon.sandbox.create();
+const expect = chai.expect;
+const assert = chai.assert;
 
-const controller = require('../../../api/controllers/UsersController');
-const gateway = require('../../../api/helpers/gateway');
+const getUserFixtures = require('../fixtures/user');
 
 chai.should();
 chai.use(require('chai-as-promised'));
 
-describe('unit/Users controller', () => {
+describe('functional/Users controller', () => {
+  
   afterEach(() => {
-    sandbox.restore();
+    API.build = '';
   });
 
-  describe('addUser', () => {
-    it('positive', async () => {})
+  it('addUser - mail exist', async () => {
+    await API.buildMutation('addOneFailedMailExist', getUserFixtures.addOneFailedMailExist, ['email', 'password']);
+    await API.execute();
+    expect(API.result.response.request.req.res.req.res.statusMessage).to.be.a('string');
+    expect(API.result.response.request.req.res.req.res.statusMessage).equal('Bad Request');
+    expect(API.result.response.request.req.res.req.res.statusCode).to.be.a('number');
+    expect(API.result.response.request.req.res.req.res.statusCode).equal(400);
   });
-  describe('getUser', () => {
-    const fixtures = require('/var/lib/core/integration_fixtures/user');
-    const user = _.find(fixtures, { email: 'update_password@email.com' });
-    const { email, password } = user;
 
-    it('positive', async () => {
-      await API.buildMutation('createOrder', fixturesOrder.createOrder, ['id']);
-      await API.execute();
-      expect(API.result).to.be.an('object');
-      expect(API.result.data).to.have.property('createOrder');
-      expect(API.result.data.createOrder).to.have.property('id');
-    });
+  it('addUser', async () => {
+    await API.buildMutation('addOneUser', getUserFixtures.addOneUser, ['email', 'password']);
+    await API.execute();
+    expect(API.result).to.be.an('object');
+    expect(API.result.data).to.have.property('addUser');
+    expect(API.result.data.getUser).to.have.property('id');
+  });
 
-    it('negative, id doesnot exist', async () => {
-      await API.buildMutation('createOrder', fixturesOrder.createOrder, ['id']);
-      await API.execute();
-      expect(API.result).to.be.an('object');
-      expect(API.result.data).to.have.property('createOrder');
-      expect(API.result.data.createOrder).to.have.property('id');
-    });
+  it('getUser - id not found', async () => {
+    await API.buildMutation('getUserNoUser', getUserFixtures.getUserNoUser, ['id']);
+    await API.execute();
+    expect(API.result.response.request.req.res.req.res.statusMessage).to.be.a('string');
+    expect(API.result.response.request.req.res.req.res.statusMessage).equal('Bad Request');
+    expect(API.result.response.request.req.res.req.res.statusCode).to.be.a('number');
+    expect(API.result.response.request.req.res.req.res.statusCode).equal(400);
+  });
+
+  it('getUser', async () => {
+    await API.buildMutation('getUser', getUserFixtures.getUser, ['id']);
+    await API.execute();
+    expect(API.result).to.be.an('object');
+    expect(API.result.data).to.have.property('getUser');
+    expect(API.result.data.getUser).to.have.property('id');
   });
 });
